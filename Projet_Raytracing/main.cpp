@@ -1,6 +1,7 @@
 #include <iostream>
 #include "../FreeImage/FreeImage.h"
-#include "glm/glm.hpp"
+#include "../SDL2-2.0.9/include/SDL.h"
+
 int main()
 {
 	std::cout << "hello\n";
