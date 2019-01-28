@@ -10,9 +10,8 @@ class Scene
 {
 public:
 	vector<Materials> materials_tab;
-	vector<Object> materials_tab;
-	vector<LightSource> materials_tab;
-	int sizex, sizey;
+	vector<Object> objects_tab;
+	vector<LightSource> lightsources_tab;
 	Scene();
 	~Scene();
 };
