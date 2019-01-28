@@ -1,5 +1,5 @@
 #include "LightSource.h"
-
+#include "vec3.h"
 
 
 LightSource::LightSource()
