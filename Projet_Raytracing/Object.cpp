@@ -1,10 +1,6 @@
 #include "object.h"
 #include "vec3.h"
 
-Object::Object()
-{
-}
-
 Object::Object(vec3 pos, vec3 rot)
 {
 	position = pos;
@@ -14,7 +10,7 @@ Object::Object(vec3 pos, vec3 rot, int material)
 {
 	position = pos;
 	rotation = rot;
-	materials=material
+	materials = material;
 }
 
 Object::~Object()
