@@ -128,6 +128,7 @@
     <ClCompile Include="LightSource.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Materials.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="vec3.cpp" />
     <ClCompile Include="vec4.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="Hitbox_light_object.h" />
     <ClInclude Include="LightSource.h" />
     <ClInclude Include="Materials.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="vec3.h" />
     <ClInclude Include="vec4.h" />
