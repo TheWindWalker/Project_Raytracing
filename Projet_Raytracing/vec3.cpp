@@ -63,3 +63,9 @@ vec3 reflexion(vec3 norm, vec3 vec) {
 	vec3 c = dif3(vec, prod(norm, 2 * prodScal(vec, norm)));
 	return c;
 }
+
+vec3 normalize(vec3 vec) {
+	float n = norm(vec);
+	vec3 c = vec3(vec.getx() / n, vec.gety() / n, vec.getz() / n);
+	return c;
+}
