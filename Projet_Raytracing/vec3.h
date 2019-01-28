@@ -1,19 +1,16 @@
 #pragma once
 class vec3
 {
-private:
+public:
 	float x;
 	float y;
 	float z;
 
-public:
+
 	vec3();
 	vec3(float coordx, float coordy, float coordz);
 	~vec3();
 
-	float getx();
-	float gety();
-	float getz();
 };
 
 vec3 add3(vec3 a, vec3 b);
