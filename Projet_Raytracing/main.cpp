@@ -86,9 +86,13 @@ void event_loop() {
 		}
 	}
 }
-bool save_image(FIBITMAP *freeimage_bitmap)
+SDL_Surface *refresh_image(SDL_Window *window,FIBITMAP *freeimage_bitmap)
 {
-	return FreeImage_Save(FIF_PNG, freeimage_bitmap, "export.png", 0);
+	//Assign the image to the surface
+	SDL_Surface *sdl_surface = get_sdl_surface(freeimage_bitmap);
+	//Render the image in the windows
+	render_image(window, sdl_surface);
+	return sdl_surface;
 }
 void render_windows()
 {
@@ -96,12 +100,9 @@ void render_windows()
 	FIBITMAP *bitmap = FreeImage_Allocate(WIDTH, HEIGHT, BitsPerPixel);
 	//Create a windows with the same width and height
 	SDL_Window *sdl_window = get_sdl_window(WIDTH, HEIGHT);
-	//Assign the image to the surface
-	SDL_Surface *sdl_surface = get_sdl_surface(bitmap);
-
-	//Render the image in the windows
-	render_image(sdl_window, sdl_surface);
-	save_image(bitmap);
+	SDL_Surface *sdl_surface = refresh_image(sdl_window, bitmap);
+	
+	FreeImage_Save(FIF_PNG, bitmap, "export.png", 0);
 	//Wait for a key press
 	event_loop();
 
