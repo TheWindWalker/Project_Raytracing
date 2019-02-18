@@ -8,7 +8,6 @@ public:
 	Cube();
 	Cube(Object(vec3 pos, vec3 rot), float diam);
 	Cube(Object(vec3 pos, vec3 rot, int material), float diam);
-	Cube();
 	~Cube();
 };
 
