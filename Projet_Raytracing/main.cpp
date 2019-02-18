@@ -1,78 +1,14 @@
 #include <iostream>
 #include "../FreeImage/FreeImage.h"
 #include "SDL.h"
+#include <time.h>
+#include <chrono>
+#include <thread>
+
 
 #define WIDTH 500
 #define HEIGHT 500
 #define BitsPerPixel 24
-
-/** Initialise a SDL surface and return a pointer to it.
- *
- *  This function flips the FreeImage bitmap vertically to make it compatible
- *  with SDL's coordinate system.
- *
- */
-SDL_Surface *get_sdl_surface(FIBITMAP *freeimage_bitmap) {
-
-	// Loaded image is upside down, so flip it.
-	FreeImage_FlipVertical(freeimage_bitmap);
-
-	SDL_Surface *sdl_surface = SDL_CreateRGBSurfaceFrom(
-		FreeImage_GetBits(freeimage_bitmap),
-		FreeImage_GetWidth(freeimage_bitmap),
-		FreeImage_GetHeight(freeimage_bitmap),
-		FreeImage_GetBPP(freeimage_bitmap),
-		FreeImage_GetPitch(freeimage_bitmap),
-		FreeImage_GetRedMask(freeimage_bitmap),
-		FreeImage_GetGreenMask(freeimage_bitmap),
-		FreeImage_GetBlueMask(freeimage_bitmap),
-		0
-	);
-
-	if (sdl_surface == NULL) {
-		fprintf(stderr, "Failed to create surface: %s\n", SDL_GetError());
-		exit(1);
-	}
-
-	return sdl_surface;
-}
-
-/** Initialise a SDL window and return a pointer to it. */
-SDL_Window *get_sdl_window(int width, int height) {
-	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		fprintf(stderr, "SDL couldn't initialise: %s.\n", SDL_GetError());
-		exit(1);
-	}
-
-	SDL_Window *sdl_window;
-	sdl_window = SDL_CreateWindow("Raytracing",
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		width,
-		height,
-		SDL_WINDOW_BORDERLESS);
-
-	return sdl_window;
-}
-
-/** Display the image by rendering the surface as a texture in the window. */
-void render_image(SDL_Window *window, SDL_Surface *surface) {
-	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
-	if (renderer == NULL) {
-		fprintf(stderr, "Failed to render: %s\n", SDL_GetError());
-		exit(1);
-	}
-
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-	if (texture == NULL) {
-		fprintf(stderr, "Failed to load image\n");
-		exit(1);
-	}
-
-	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, texture, NULL, NULL);
-	SDL_RenderPresent(renderer);
-}
 
 /* Loop until a key is pressed. */
 void event_loop() {
@@ -86,32 +22,143 @@ void event_loop() {
 		}
 	}
 }
-SDL_Surface *refresh_image(SDL_Window *window,FIBITMAP *freeimage_bitmap)
+
+/** Initialise a SDL window and return a pointer to it. */
+SDL_Window *get_sdl_window(int width, int height) {
+	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+		std::cout << "SDL couldn't initialise: %s.\n"<< SDL_GetError() <<"\n";
+		exit(5);
+	}
+
+	SDL_Window *sdl_window;
+	sdl_window = SDL_CreateWindow("Raytracing",
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		width,
+		height,
+		SDL_WINDOW_BORDERLESS);
+
+	return sdl_window;
+}
+/*Return the surface painted with the image*/
+SDL_Surface* get_surface_image(FIBITMAP *image)
 {
 	//Assign the image to the surface
-	SDL_Surface *sdl_surface = get_sdl_surface(freeimage_bitmap);
-	//Render the image in the windows
-	render_image(window, sdl_surface);
+	// Loaded image is upside down, so flip it. for compatibility with SDL
+	FreeImage_FlipVertical(image);
+
+	SDL_Surface *sdl_surface = SDL_CreateRGBSurfaceFrom(
+		FreeImage_GetBits(image),
+		FreeImage_GetWidth(image),
+		FreeImage_GetHeight(image),
+		FreeImage_GetBPP(image),
+		FreeImage_GetPitch(image),
+		FreeImage_GetRedMask(image),
+		FreeImage_GetGreenMask(image),
+		FreeImage_GetBlueMask(image),
+		0
+	);
+
+	if (sdl_surface == NULL) {
+		std::cout << "Failed to create surface: %s\n" << SDL_GetError() << "\n";
+		exit(4);
+	}
 	return sdl_surface;
+}
+/** Display the image by rendering the surface as a texture in the window. */
+void render_image(SDL_Window *window, FIBITMAP *image) {
+	
+	SDL_Surface* sdl_surface = get_surface_image(image);
+	//Render the image
+	SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
+	if (renderer == NULL) {
+		std::cout << "Failed to render: %s\n"<< SDL_GetError()<<"\n";
+		exit(3);
+	}
+
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, sdl_surface);
+	if (texture == NULL) {
+		std::cout << "Failed to load image\n";
+		exit(2);
+	}
+
+	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, texture, NULL, NULL);
+	SDL_RenderPresent(renderer);
+}
+
+
+void fill_image(FIBITMAP *image)
+{
+	RGBQUAD color;
+	if (!image)
+	{
+		std::cout << "Error No image, fill_image()\n";
+		exit(404);
+	}
+	//Draws a gradient from blue to green:
+	for (int i = 0; i < WIDTH; i++) {
+		for (int j = 0; j < HEIGHT; j++) {
+			color.rgbRed = 0;
+			color.rgbGreen = (double)i / WIDTH * 255.0;
+			color.rgbBlue = (double)j / HEIGHT * 255.0;
+			FreeImage_SetPixelColor(image, i, j, &color);
+		}
+	}
+}
+void random_image(FIBITMAP *image)
+{
+	RGBQUAD color;
+	if (!image)
+	{
+		std::cout << "Error No image, fill_image()\n";
+		exit(1);
+	}
+	//Draws a gradient from blue to green:
+	for (int i = 0; i < WIDTH; i++) {
+		for (int j = 0; j < HEIGHT; j++) {
+			color.rgbRed = rand() % 255;
+			color.rgbGreen = rand() % 255;
+			color.rgbBlue = rand() % 255;
+			FreeImage_SetPixelColor(image, i, j, &color);
+		}
+	}
 }
 void render_windows()
 {
-	/*The bitmap will be generated by our software*/
-	FIBITMAP *bitmap = FreeImage_Allocate(WIDTH, HEIGHT, BitsPerPixel);
 	//Create a windows with the same width and height
 	SDL_Window *sdl_window = get_sdl_window(WIDTH, HEIGHT);
-	SDL_Surface *sdl_surface = refresh_image(sdl_window, bitmap);
+	FIBITMAP *bitmap = FreeImage_Allocate(WIDTH, HEIGHT, BitsPerPixel);
+	/*The bitmap will be generated by our software*/
+	fill_image(bitmap);
+
 	
 	FreeImage_Save(FIF_PNG, bitmap, "export.png", 0);
+
+	int keypressed = 0;
+	SDL_Event e;
+	while (!keypressed) {
+		std::this_thread::sleep_for(std::chrono::milliseconds(40));
+		render_image(sdl_window, bitmap);
+		while (SDL_PollEvent(&e)) {
+			std::cout << "Key pressed: " << e.type << "\n";
+			if (e.type == SDL_KEYDOWN) {
+				keypressed = 0;
+			}
+		}
+	}
+
 	//Wait for a key press
-	event_loop();
+	//event_loop();//Old
 
 	//Unloading from memory and clean quit
 	FreeImage_Unload(bitmap);
-	SDL_FreeSurface(sdl_surface);
+	//SDL_FreeSurface(sdl_surface);
+	
 }
 int main(int argc, char* argv[])
-{
+{	
+	srand(time(NULL));
 	render_windows(); // Affiche une fenêtre avec l'image générée (boucle attendant une pression sur une touche)
 	return 0;
 }
