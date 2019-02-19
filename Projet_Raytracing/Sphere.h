@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SPHERE
+#define SPHERE
+
 #include "Object.h"
 #include "vec3.h"
 #include <vector>
@@ -15,3 +17,4 @@ public:
 	vec3 intersect(vec3 ray);
 };
 
+#endif

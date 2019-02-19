@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SCENE
+#define SCENE
+
 #include <vector>
 #include "LightSource.h"
 #include "Object.h"
@@ -16,3 +18,4 @@ public:
 	~Scene();
 };
 
+#endif
