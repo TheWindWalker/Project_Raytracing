@@ -4,10 +4,12 @@ Camera::Camera()
 {
 
 }
-Camera::Camera(vec3 pos, vec3 rot)
+Camera::Camera(vec3 pos, vec3 dir, vec3 axeverti = vec3(0, 0, 1))
 {
 	position = pos;
-	rotation = rot;
+	direction = normalize(dir);
+	horiz = normalize(prodVect(dir, axeverti));
+	verti = normalize(axeverti);
 
 }
 Camera::~Camera()
