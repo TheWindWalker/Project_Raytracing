@@ -15,6 +15,16 @@ Sphere::~Sphere()
 {
 }
 
-vec3 Sphere::intersect(vec3 ray) {
-
+vec3 Sphere::intersect(vec3 ray, vec3 posCamera) {
+	bool inter = false;
+	float i = 0.001;
+	vec3 point = vec3(-1, -1, -1);
+	while (i < 50 && inter == false) {
+		if (norm(dif3(add3(posCamera, prod(ray, i)), pos)) <= r) {
+			inter = true;
+			point = add3(posCamera, prod(ray, i));
+		}
+		i += 0.001;
+	}
+	return point;
 }

@@ -14,7 +14,7 @@ public:
 	Sphere(float posx, float posy, float posz, float rayon);
 	~Sphere();
 
-	vec3 intersect(vec3 ray);
+	vec3 intersect(vec3 ray, vec3 posCamera);
 };
 
 #endif

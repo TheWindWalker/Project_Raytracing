@@ -5,7 +5,7 @@ Camera::Camera()
 {
 
 }
-Camera::Camera(vec3 pos, vec3 dir) // /!\ axeverti doit être orthogonal à dir
+Camera::Camera(vec3 pos, vec3 dir)
 {
 	float r = norm(dir);
 	float cosTheta = dir.z / r;
