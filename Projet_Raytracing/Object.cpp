@@ -20,3 +20,7 @@ Object::Object(vec3 pos, vec3 rot, int material)
 Object::~Object()
 {
 }
+
+vec3 Object::intersect(vec3 ray, vec3 position) {
+	return vec3(-1, -1, -1);
+}
