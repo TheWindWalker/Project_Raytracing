@@ -200,6 +200,9 @@ void generate_image(FIBITMAP *image, Scene sce, Camera c)
 		}		
 	}
 	std::cout << "Taked time for this frame:" << (double)(clock() - tStart) / CLOCKS_PER_SEC;
+	/*Make a "BEEP" when finished*/
+	std::cout << "\a";
+	/*Yeah it's very simple*/
 }
 void render_windows(Scene sce, Camera c)
 {
@@ -302,12 +305,23 @@ void render_windows(Scene sce, Camera c)
 
 int main(int argc, char* argv[])
 {	
-	vector<Object*> spherelist;
-	for(int testx=0; testx<5;testx++)
+	vector<Object*> spherelist{
+		new Sphere(0, -20, 9, 4),
+		new Sphere(5, -20, 9, 4),
+		new Sphere(10, -20, 9, 4),
+		new Sphere(15, -20, 9, 4),
+
+		new Sphere(0, 20, 9, 5),
+		new Sphere(5, 20, 9, 5),
+		new Sphere(10, 20, 9, 5),
+		new Sphere(15, 20, 9, 5)
+	};
+	
+	/*for(int testx=0; testx<5;testx++)
 	{
 		spherelist.push_back(new Sphere(0 + 4 * testx, 1, 7, 1+testx*0.3));
 		spherelist.push_back(new Sphere(0 + 4 * testx, 14, 8, 1 + testx * 0.3));
-	}
+	}*/
 	//source de lumière en 0
 	LightSource light = LightSource(255, 255, 255, vec3(0, 0, 0));
 	//Far away line horizontaly: correct but far
