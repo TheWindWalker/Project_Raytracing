@@ -24,6 +24,12 @@ public:
 	vector<Camera> camera_tab;
 
 	Scene();
+	Scene(
+		vector<Camera> camera_list, 
+		vector<LightSource> lightsources_list,
+		vector<Materials> materials_list,
+		vector<Object*> objects_list
+		);
 
 	~Scene();
 

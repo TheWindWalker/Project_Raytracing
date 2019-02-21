@@ -8,6 +8,19 @@
 Scene::Scene(){
 }
 
+/*Create the full scene with the initializer*/
+Scene::Scene(
+	vector<Camera> camera_list,
+	vector<LightSource> lightsources_list,
+	vector<Materials> materials_list,
+	vector<Object*> objects_list
+) {
+	camera_tab = camera_list;
+	lightsources_tab = lightsources_list;
+	materials_tab = materials_list;
+	objects_tab = objects_list;
+}
+
 /*Destructor*/
 Scene::~Scene(){
 }
