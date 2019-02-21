@@ -164,13 +164,14 @@ void generate_image(FIBITMAP *image, Scene sce, Camera c)
 			vec3 visiblePoint = objectVisible(sce, primaryRay, c.position);
 			//printf("x : %f y : %f z : %f", visiblePoint.x, visiblePoint.y, visiblePoint.z);
 			if (((visiblePoint.x == 999.0) && (visiblePoint.y == 999.0)) && (visiblePoint.z == 999.0)) {
-				if ((j < 100) && (i < 5))
+				
+				if ((j < 100) && (i < 5))//For knowing the way of drawing data DEBUG ONLY
 				{
 					color.rgbRed = 0;
 					color.rgbGreen = 0;
 					color.rgbBlue = 255;
 				}
-				else if ((i < 100) && (j < 5))
+				else if ((i < 100) && (j < 5)) //For drawing the way of drawing data DEBUG ONLY
 				{
 					color.rgbRed = 0;
 					color.rgbGreen = 0;
