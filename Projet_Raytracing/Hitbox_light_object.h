@@ -1,4 +1,6 @@
-#pragma once
+#ifndef HL
+#define HL
+
 class Hitbox_light_object
 {
 public:
@@ -6,3 +8,4 @@ public:
 	~Hitbox_light_object();
 };
 
+#endif

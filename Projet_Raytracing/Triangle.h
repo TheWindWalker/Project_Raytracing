@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TRI
+#define TRI
+
 #include "vec3.h"
 #include <vector>
 
@@ -13,3 +15,4 @@ public:
 	~Triangle();
 };
 
+#endif

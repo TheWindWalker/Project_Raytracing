@@ -1,4 +1,6 @@
-#pragma once
+#ifndef LS
+#define LS
+
 #include "vec3.h"
 class LightSource
 {
@@ -9,3 +11,4 @@ public:
 	~LightSource();
 };
 
+#endif

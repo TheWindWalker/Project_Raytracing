@@ -4,6 +4,8 @@
 #include <time.h>
 #include <chrono>
 #include <thread>
+#include "Camera.h"
+#include "Object.h"
 
 #define WIDTH 500
 #define HEIGHT 500
@@ -167,6 +169,6 @@ void render_windows()
 int main(int argc, char* argv[])
 {	
 	srand(time(NULL));
-	render_windows(); // Affiche une fenêtre avec l'image générée (boucle attendant une pression sur une touche)
+	render_windows(); // Affiche une fenï¿½tre avec l'image gï¿½nï¿½rï¿½e (boucle attendant une pression sur une touche)
 	return 0;
 }
