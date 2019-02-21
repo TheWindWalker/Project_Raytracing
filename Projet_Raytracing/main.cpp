@@ -6,6 +6,7 @@
 #include <thread>
 #include "Camera.h"
 #include "Object.h"
+#include "Scene.h"
 
 #define WIDTH 500
 #define HEIGHT 500
@@ -166,9 +167,49 @@ void render_windows()
 	
 	
 }
+
+vec3 objectVisible(Scene scene,vec3 camRay, vec3 camPos) {
+	vector<Object> objectList = scene.get_objects();
+	int numberObject = objectList.size();
+	vec3 point = vec3(-1, -1, -1);
+	vec3 closerPoint = vec3(999, 999, 999);
+	for (int i = 0; i < numberObject; i++) {
+		point = objectList[i].intersect(camRay, camPos);
+		if (!(point.x == point.y == point.z == -1) && norm(dif3(point, camPos)) < norm(dif3(closerPoint, camPos))) { //si on trouve un point d'intersection et qu'il est plus proche de la camera
+			closerPoint = point;
+		}
+	}
+	return closerPoint;
+}
+
+bool objectEnlighted(Scene scene, vec3 point) {
+	vector<LightSource> lightList = scene.get_lightsources();
+	int numberLight = lightList.size();
+	vector<Object> objectList = scene.get_objects();
+	int numberObject = objectList.size();
+	bool enlighted = true;
+	int lightReceive = 0;
+	for (int i = 0; i < numberLight; i++) {
+		vec3 shadowRay = lightList[i].shadowray(point);
+		enlighted = true;
+		lightReceive += 1;
+		for (int j = 0; j < numberObject; j++) {
+			vec3 newpoint = objectList[i].intersect(shadowRay, point);
+			if (!(newpoint.x == newpoint.y == newpoint.z == -1) && enlighted) {
+				enlighted = false;
+				lightReceive -= 1;
+			}
+		}
+	}
+	if (lightReceive > 0)
+		return true;
+	else
+		return false;
+}
+
 int main(int argc, char* argv[])
 {	
 	srand(time(NULL));
-	render_windows(); // Affiche une fen�tre avec l'image g�n�r�e (boucle attendant une pression sur une touche)
+	render_windows(); // Affiche une fenetre avec l'image generee (boucle attendant une pression sur une touche)
 	return 0;
 }

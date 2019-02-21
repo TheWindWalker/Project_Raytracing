@@ -12,6 +12,8 @@ public:
 	Object(vec3 pos, vec3 rot, int material);
 
 	~Object();
+
+	vec3 intersect(vec3 ray, vec3 position);
 };
 
 #endif
