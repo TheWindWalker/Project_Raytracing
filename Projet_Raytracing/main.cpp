@@ -18,6 +18,7 @@
 #define DEBUG_IMAGE 0 //for printing debug_image (random color)
 #define PRINT_WINDOWS 1 //for printing to screen the image
 #define DEBUG_RAYTRACING 0 //Use raytracing in fps mode (multiple image generated each after one other)
+#define DEBUG_PROGRESS 0
 
 //FreeImage_Save(FIF_PNG, bitmap, "export.png", 0); //Export an image to a file
 
@@ -73,11 +74,9 @@ vec3 objectVisible(Scene scene, vec3 camRay, vec3 camPos) {
 	for (int i = 0; i < numberObject; i++) {
 		point = objectList[i]->intersect(camRay, camPos);
 		if (!(((point.x == -1) && (point.y == -1)) && (point.z == -1))) {
-			std::cout << "Point en -1 \n";
 			if (norm(dif3(point, camPos)) < norm(dif3(closerPoint, camPos))) {
 				//si on trouve un point d'intersection et qu'il est plus proche de la camera
 				closerPoint = point;
-				std::cout << "Closer point found \n";
 			}
 		}
 	}
@@ -96,9 +95,9 @@ bool objectEnlighted(Scene scene, vec3 point) {
 		enlighted = true;
 		lightReceive += 1;
 		for (int j = 0; j < numberObject; j++) {
-			objectList[i]->affiche();//NE VAS JAMAIS ICI
 			vec3 newpoint = objectList[i]->intersect(shadowRay, point);
 			if (!(((newpoint.x == -1) && (newpoint.y == -1)) && (newpoint.z == -1)) && enlighted) {
+				//NE VAS PAS ICI ?
 				enlighted = false;
 				lightReceive -= 1;
 			}
@@ -159,6 +158,15 @@ void generate_image(FIBITMAP *image, Scene sce, Camera c)
 	//Do stuff from here
 
 	//Example Draws the image totaly white:
+
+
+	float progressbar = 0.0;
+	int value_bar = 0;
+	int barWidth = 70;
+	float max_value = WIDTH * HEIGHT;
+	double time_for_1000 = 0.1;
+	clock_t tStart = clock();
+	
 	for (int i = 0; i < WIDTH; i++) {
 		for (int j = 0; j < HEIGHT; j++) {
 			vec3 primaryRay = c.createRay(i, j);
@@ -170,7 +178,6 @@ void generate_image(FIBITMAP *image, Scene sce, Camera c)
 				color.rgbBlue = 0;
 			}
 			else {
-				std::cout << "autre \n";
 				if (objectEnlighted(sce, visiblePoint)) {
 					color.rgbRed = 0;
 					color.rgbGreen = 255;
@@ -183,6 +190,28 @@ void generate_image(FIBITMAP *image, Scene sce, Camera c)
 				}
 			}
 			FreeImage_SetPixelColor(image, i, j, &color);
+
+			if (DEBUG_PROGRESS == 1)
+			{
+				value_bar++;
+				std::cout << "[";
+				int cursor_pos = barWidth * progressbar;
+				for (int i = 0; i < barWidth; ++i) {
+					if (i < cursor_pos) std::cout << "=";
+					else if (i == cursor_pos) std::cout << ">";
+					else std::cout << " ";
+				}
+				std::cout << "] " << int(progressbar * 100.0) << "% Items: " << value_bar << "/" << max_value;
+				if (value_bar == 1000)
+				{
+					time_for_1000 = (double)(clock() - tStart) / CLOCKS_PER_SEC;
+				}
+				std::cout << " Remaining: " << (max_value - value_bar) * time_for_1000 << "s\r";
+				std::cout.flush();
+
+				progressbar = value_bar / max_value;
+			}
+
 		}
 	}
 	//Do stuff to here
@@ -290,11 +319,11 @@ void render_windows(Scene sce, Camera c)
 
 int main(int argc, char* argv[])
 {	
-	Sphere s = Sphere(10, 10, 10, 5);
-	Camera cam = Camera(vec3(0, 0, 10), vec3(1, 1, 0));
+	Sphere s = Sphere(1, 1, 20, 10);
+	Camera cam = Camera(vec3(0, 0, -1), vec3(0, 0, 0));
 	cam.sizex = WIDTH;
 	cam.sizey = HEIGHT;
-	LightSource light = LightSource(255, 255, 255, vec3(20, 20, 20));
+	LightSource light = LightSource(255, 255, 255, vec3(1, 1, 2));
 	Scene scene = Scene();
 	scene.add_camera(cam);
 	scene.add_lightsources(light);
