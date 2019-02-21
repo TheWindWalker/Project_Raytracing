@@ -18,7 +18,6 @@
 #define DEBUG_IMAGE 0 //for printing debug_image (random color)
 #define PRINT_WINDOWS 1 //for printing to screen the image
 #define DEBUG_RAYTRACING 0 //Use raytracing in fps mode (multiple image generated each after one other)
-#define DEBUG_PROGRESS 0
 
 //FreeImage_Save(FIF_PNG, bitmap, "export.png", 0); //Export an image to a file
 
@@ -45,7 +44,7 @@ SDL_Surface* get_surface_image(FIBITMAP *image)
 {
 	//Assign the image to the surface
 	// Loaded image is upside down, so flip it. for compatibility with SDL
-	FreeImage_FlipVertical(image);
+	//FreeImage_FlipVertical(image);
 
 	SDL_Surface *sdl_surface = SDL_CreateRGBSurfaceFrom(
 		FreeImage_GetBits(image),
@@ -155,27 +154,33 @@ void generate_image(FIBITMAP *image, Scene sce, Camera c)
 		std::cout << "Error No image, fill_image()\n";
 		exit(1);
 	}
-	//Do stuff from here
-
-	//Example Draws the image totaly white:
-
-
-	float progressbar = 0.0;
-	int value_bar = 0;
-	int barWidth = 70;
-	float max_value = WIDTH * HEIGHT;
-	double time_for_1000 = 0.1;
+	//Draw the image
 	clock_t tStart = clock();
-	
+	bool un_sur_deux_horizontal = false;
+	bool un_sur_deux_vertical = false;
 	for (int i = 0; i < WIDTH; i++) {
 		for (int j = 0; j < HEIGHT; j++) {
 			vec3 primaryRay = c.createRay(i, j);
 			vec3 visiblePoint = objectVisible(sce, primaryRay, c.position);
 			//printf("x : %f y : %f z : %f", visiblePoint.x, visiblePoint.y, visiblePoint.z);
 			if (((visiblePoint.x == 999.0) && (visiblePoint.y == 999.0)) && (visiblePoint.z == 999.0)) {
-				color.rgbRed = 255;
-				color.rgbGreen = 0;
-				color.rgbBlue = 0;
+				if ((j < 100) && (i < 5))
+				{
+					color.rgbRed = 0;
+					color.rgbGreen = 0;
+					color.rgbBlue = 255;
+				}
+				else if ((i < 100) && (j < 5))
+				{
+					color.rgbRed = 0;
+					color.rgbGreen = 0;
+					color.rgbBlue = 255;
+				}
+				else {
+					color.rgbRed = 255;
+					color.rgbGreen = 0;
+					color.rgbBlue = 0;
+				}
 			}
 			else {
 				if (objectEnlighted(sce, visiblePoint)) {
@@ -189,34 +194,11 @@ void generate_image(FIBITMAP *image, Scene sce, Camera c)
 					color.rgbBlue = 0;
 				}
 			}
+			
 			FreeImage_SetPixelColor(image, i, j, &color);
-
-			if (DEBUG_PROGRESS == 1)
-			{
-				value_bar++;
-				std::cout << "[";
-				int cursor_pos = barWidth * progressbar;
-				for (int i = 0; i < barWidth; ++i) {
-					if (i < cursor_pos) std::cout << "=";
-					else if (i == cursor_pos) std::cout << ">";
-					else std::cout << " ";
-				}
-				std::cout << "] " << int(progressbar * 100.0) << "% Items: " << value_bar << "/" << max_value;
-				if (value_bar == 1000)
-				{
-					time_for_1000 = (double)(clock() - tStart) / CLOCKS_PER_SEC;
-				}
-				std::cout << " Remaining: " << (max_value - value_bar) * time_for_1000 << "s\r";
-				std::cout.flush();
-
-				progressbar = value_bar / max_value;
-			}
-
-		}
+		}		
 	}
-	//Do stuff to here
-	
-
+	std::cout << "Taked time for this frame:" << (double)(clock() - tStart) / CLOCKS_PER_SEC;
 }
 void render_windows(Scene sce, Camera c)
 {
@@ -319,15 +301,24 @@ void render_windows(Scene sce, Camera c)
 
 int main(int argc, char* argv[])
 {	
-	Sphere s = Sphere(1, 1, 20, 10);
-	Camera cam = Camera(vec3(0, 0, -1), vec3(0, 0, 0));
+	vector<Object*> spherelist;
+	for(int testx=0; testx<10;testx++)
+	{
+		spherelist.push_back(new Sphere(0 + 2 * testx, 1, 2, 0.99f));
+	}
+	//source de lumière en 0
+	LightSource light = LightSource(255, 255, 255, vec3(0, 0, 0));
+	//Far away line horizontaly: correct but far
+	Camera cam = Camera(vec3(0, 0, 0), vec3(0, 1, 0));
 	cam.sizex = WIDTH;
 	cam.sizey = HEIGHT;
-	LightSource light = LightSource(255, 255, 255, vec3(1, 1, 2));
+	
 	Scene scene = Scene();
+
 	scene.add_camera(cam);
 	scene.add_lightsources(light);
-	scene.add_object(&s);
+	scene.set_object_list(spherelist);
+
 	srand(time(NULL));
 	render_windows(scene, scene.get_camera()[0]); // Affiche une fenetre avec l'image generee (boucle attendant une pression sur une touche)
 	return 0;
