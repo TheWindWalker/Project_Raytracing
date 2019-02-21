@@ -1,4 +1,6 @@
-#pragma once
+#ifndef VEC4
+#define VEC4
+
 class vec4
 {
 public:
@@ -6,3 +8,4 @@ public:
 	~vec4();
 };
 
+#endif

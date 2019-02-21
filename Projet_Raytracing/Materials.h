@@ -1,4 +1,6 @@
-#pragma once
+#ifndef MAT
+#define MAT
+
 class Materials
 {
 public:
@@ -9,3 +11,4 @@ public:
 	
 };
 
+#endif

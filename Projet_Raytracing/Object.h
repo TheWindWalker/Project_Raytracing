@@ -1,4 +1,6 @@
-#pragma once
+#ifndef OBJ
+#define OBJ
+
 #include "vec3.h"
 class Object
 {
@@ -11,3 +13,5 @@ public:
 
 	~Object();
 };
+
+#endif
