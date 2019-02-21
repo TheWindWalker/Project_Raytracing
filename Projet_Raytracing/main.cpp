@@ -71,7 +71,7 @@ vec3 objectVisible(Scene scene, vec3 camRay, vec3 camPos) {
 	vec3 closerPoint = vec3(999, 999, 999);
 	for (int i = 0; i < numberObject; i++) {
 		point = objectList[i]->intersect(camRay, camPos);
-		if (!(point.x == -1 && point.y == -1 && point.z == -1) && norm(dif3(point, camPos)) < norm(dif3(closerPoint, camPos))) { //si on trouve un point d'intersection et qu'il est plus proche de la camera
+		if (!(((point.x == -1) && (point.y == -1)) && (point.z == -1)) && (norm(dif3(point, camPos)) < norm(dif3(closerPoint, camPos)))) { //si on trouve un point d'intersection et qu'il est plus proche de la camera
 			closerPoint = point;
 		}
 	}
@@ -91,7 +91,7 @@ bool objectEnlighted(Scene scene, vec3 point) {
 		lightReceive += 1;
 		for (int j = 0; j < numberObject; j++) {
 			vec3 newpoint = objectList[i]->intersect(shadowRay, point);
-			if (!(newpoint.x == -1 && newpoint.y == -1 && newpoint.z == -1) && enlighted) {
+			if (!(((newpoint.x == -1) && (newpoint.y == -1)) && (newpoint.z == -1)) && enlighted) {
 				enlighted = false;
 				lightReceive -= 1;
 			}
@@ -157,12 +157,13 @@ void generate_image(FIBITMAP *image, Scene sce, Camera c)
 			vec3 primaryRay = c.createRay(i, j);
 			vec3 visiblePoint = objectVisible(sce, primaryRay, c.position);
 			//printf("x : %f y : %f z : %f", visiblePoint.x, visiblePoint.y, visiblePoint.z);
-			if (visiblePoint.x == 999.0 && visiblePoint.y == 999.0 && visiblePoint.z == 999.0) {
+			if (((visiblePoint.x == 999.0) && (visiblePoint.y == 999.0)) && (visiblePoint.z == 999.0)) {
 				color.rgbRed = 255;
 				color.rgbGreen = 0;
 				color.rgbBlue = 0;
 			}
 			else {
+				std::cout << "autre \n";
 				if (objectEnlighted(sce, visiblePoint)) {
 					color.rgbRed = 0;
 					color.rgbGreen = 255;
