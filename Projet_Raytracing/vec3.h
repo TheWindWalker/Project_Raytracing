@@ -1,4 +1,6 @@
-#pragma once
+#ifndef VEC3
+#define VEC3
+
 class vec3
 {
 public:
@@ -22,5 +24,5 @@ float norm(vec3 vec);
 vec3 reflexion(vec3 norm, vec3 vec);
 vec3 normalize(vec3 vec);
 
-
+#endif
 

@@ -1,17 +1,20 @@
-#pragma once
+#ifndef SPHERE
+#define SPHERE
+
 #include "Object.h"
 #include "vec3.h"
 #include <vector>
-
 using namespace std;
-
 class Sphere: public Object
 {
 public:
-	float diameter=1;
+	float r;
+	vec3 pos;
 	Sphere();
-	Sphere(Object(vec3 pos, vec3 rot),float diam);
-	Sphere(Object(vec3 pos, vec3 rot, int material), float diam);
+	Sphere(float posx, float posy, float posz, float rayon);
 	~Sphere();
+
+	vec3 intersect(vec3 ray, vec3 posCamera);
 };
 
+#endif
