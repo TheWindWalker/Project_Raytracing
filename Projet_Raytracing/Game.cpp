@@ -10,8 +10,8 @@ Game::Game()
 		object_list.push_back(new Cube());
 	}
 	
-	object_list[0]->affiche();
-	object_list[1]->affiche();
+	//object_list[0]->affiche();
+	//object_list[1]->affiche();
 
 	for (int i = 0; i < object_list.size(); ++i)
 	{
