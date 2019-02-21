@@ -70,12 +70,15 @@ vec3 objectVisible(Scene scene, vec3 camRay, vec3 camPos) {
 	int numberObject = objectList.size();
 	vec3 point = vec3(-1, -1, -1);
 	vec3 closerPoint = vec3(999, 999, 999);
-	//std::cout << numberObject << ": objects dans la scene\n";
 	for (int i = 0; i < numberObject; i++) {
 		point = objectList[i]->intersect(camRay, camPos);
-		if (!(((point.x == -1) && (point.y == -1)) && (point.z == -1)) && (norm(dif3(point, camPos)) < norm(dif3(closerPoint, camPos)))) { //si on trouve un point d'intersection et qu'il est plus proche de la camera
-			closerPoint = point;
-			std::cout << "Closer point found \n";
+		if (!(((point.x == -1) && (point.y == -1)) && (point.z == -1))) {
+			std::cout << "Point en -1 \n";
+			if (norm(dif3(point, camPos)) < norm(dif3(closerPoint, camPos))) {
+				//si on trouve un point d'intersection et qu'il est plus proche de la camera
+				closerPoint = point;
+				std::cout << "Closer point found \n";
+			}
 		}
 	}
 	return closerPoint;

@@ -27,14 +27,18 @@ void Sphere::affiche() const
 
 vec3 Sphere::intersect(vec3 ray, vec3 position) {
 	bool inter = false;
-	float i = 0.001;
+	//float i = 0.001;
+	float i = 1;
 	vec3 point = vec3(-1, -1, -1);
 	while (i < 50 && inter == false) {
 		if (norm(dif3(add3(position, prod(ray, i)), pos)) <= r) {
 			inter = true;
 			point = add3(position, prod(ray, i));
+			std::cout << "Point d'intersection trouvé \n";
+			break;
 		}
-		i += 0.001;
+		i += 1;
+	//	i += 0.001;
 	}
 	return point;
 }
