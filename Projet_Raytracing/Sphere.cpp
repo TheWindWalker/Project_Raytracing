@@ -6,14 +6,6 @@ Sphere::Sphere()
 {
 	vec3 pos = vec3(0.0f,0.0f,0.0f);
 }
-Sphere::Sphere(Object(vec3 pos, vec3 rot), float diam)
-{
-	diameter = diam;
-}
-Sphere::Sphere(Object(vec3 pos, vec3 rot,int material), float diam)
-{
-	diameter = diam;
-}
 
 Sphere::Sphere(float posx, float posy, float posz, float rayon) {
 	pos = vec3(posx, posy, posz);
