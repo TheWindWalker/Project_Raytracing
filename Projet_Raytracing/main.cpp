@@ -44,7 +44,7 @@ SDL_Surface* get_surface_image(FIBITMAP *image)
 {
 	//Assign the image to the surface
 	// Loaded image is upside down, so flip it. for compatibility with SDL
-	//FreeImage_FlipVertical(image);
+	FreeImage_FlipVertical(image);
 
 	SDL_Surface *sdl_surface = SDL_CreateRGBSurfaceFrom(
 		FreeImage_GetBits(image),
