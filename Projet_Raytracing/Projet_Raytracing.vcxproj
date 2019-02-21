@@ -35,7 +35,6 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -48,7 +47,6 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -68,58 +66,56 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>../FreeImage/FreeImage.lib</AdditionalDependencies>
+      <AdditionalDependencies>../FreeImage/FreeImage.lib;SDL2.lib;SDL2main.lib;SDL2test.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\lib\x86;D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>../FreeImage/FreeImage.lib</AdditionalDependencies>
+      <AdditionalDependencies>../FreeImage/FreeImage.lib;SDL2.lib;SDL2main.lib;SDL2test.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\lib\x86;D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>../FreeImage/FreeImage.lib</AdditionalDependencies>
+      <AdditionalDependencies>../FreeImage/FreeImage.lib;SDL2.lib;SDL2main.lib;SDL2test.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\lib\x86;D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>../FreeImage/FreeImage.lib</AdditionalDependencies>
+      <AdditionalDependencies>../FreeImage/FreeImage.lib;SDL2.lib;SDL2main.lib;SDL2test.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\lib\x86;D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
