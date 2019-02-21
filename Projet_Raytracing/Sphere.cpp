@@ -2,6 +2,7 @@
 #include "vec3.h"
 #include "Object.h"
 
+/*Constructeurs*/
 Sphere::Sphere()
 {
 	vec3 pos = vec3(0.0f,0.0f,0.0f);
@@ -12,9 +13,17 @@ Sphere::Sphere(float posx, float posy, float posz, float rayon) {
 	r = rayon;
 }
 
+/*Destructeur*/
 Sphere::~Sphere()
 {
 }
+
+void Sphere::affiche() const
+{
+	std::cout << "Sphere" << "\n";
+}
+
+/*Fonctions de la classe*/
 
 vec3 Sphere::intersect(vec3 ray, vec3 position) {
 	bool inter = false;

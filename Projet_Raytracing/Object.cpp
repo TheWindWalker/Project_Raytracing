@@ -17,6 +17,12 @@ Object::Object(vec3 pos, vec3 rot, int material)
 	materials = material;
 }
 
+
+void Object::affiche() const
+{
+	std::cout<<"Object_pur" << "\n";
+}
+
 Object::~Object()
 {
 }
