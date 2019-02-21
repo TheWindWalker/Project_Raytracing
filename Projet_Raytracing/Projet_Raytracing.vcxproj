@@ -70,11 +70,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\kraken\Project_Raytracing\FreeImage;D:\kraken\Project_Raytracing\SDL2-2.0.9\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>../FreeImage/FreeImage.lib;SDL2.lib;SDL2main.lib;SDL2test.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>D:\GitKraken_Reposit_folder\Project_Raytracing\SDL2-2.0.9\lib\x86;D:\GitKraken_Reposit_folder\Project_Raytracing\FreeImage;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>D:\kraken\Project_Raytracing\SDL2-2.0.9\lib\x86;D:\kraken\Project_Raytracing\FreeImage;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>

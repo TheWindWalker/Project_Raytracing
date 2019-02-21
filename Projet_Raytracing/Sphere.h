@@ -21,7 +21,7 @@ public:
 	virtual void affiche() const;
 
 	/*Fonctions de la classe*/
-	vec3 intersect(vec3 ray, vec3 posCamera);
+	vec3 intersect(vec3 ray, vec3 position);
 };
 
 #endif

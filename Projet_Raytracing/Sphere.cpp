@@ -25,14 +25,14 @@ void Sphere::affiche() const
 
 /*Fonctions de la classe*/
 
-vec3 Sphere::intersect(vec3 ray, vec3 posCamera) {
+vec3 Sphere::intersect(vec3 ray, vec3 position) {
 	bool inter = false;
 	float i = 0.001;
 	vec3 point = vec3(-1, -1, -1);
 	while (i < 50 && inter == false) {
-		if (norm(dif3(add3(posCamera, prod(ray, i)), pos)) <= r) {
+		if (norm(dif3(add3(position, prod(ray, i)), pos)) <= r) {
 			inter = true;
-			point = add3(posCamera, prod(ray, i));
+			point = add3(position, prod(ray, i));
 		}
 		i += 0.001;
 	}

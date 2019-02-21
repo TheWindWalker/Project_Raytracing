@@ -26,3 +26,7 @@ void Object::affiche() const
 Object::~Object()
 {
 }
+
+vec3 Object::intersect(vec3 ray, vec3 position) {
+	return vec3(-1, -1, -1);
+}
