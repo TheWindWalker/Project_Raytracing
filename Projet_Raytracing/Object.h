@@ -22,7 +22,7 @@ public:
 	virtual ~Object();
 	/*Affiche le type*/
 	virtual void affiche() const;
-	vec3 intersect(vec3 ray, vec3 position);
+	virtual vec3 intersect(vec3 ray, vec3 position);
 };
 
 #endif
