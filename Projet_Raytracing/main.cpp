@@ -71,7 +71,7 @@ vec3 objectVisible(Scene scene, vec3 camRay, vec3 camPos) {
 	vec3 closerPoint = vec3(999, 999, 999);
 	for (int i = 0; i < numberObject; i++) {
 		point = objectList[i]->intersect(camRay, camPos);
-		if (!(point.x == point.y == point.z == -1) && norm(dif3(point, camPos)) < norm(dif3(closerPoint, camPos))) { //si on trouve un point d'intersection et qu'il est plus proche de la camera
+		if (!(point.x == -1 && point.y == -1 && point.z == -1) && norm(dif3(point, camPos)) < norm(dif3(closerPoint, camPos))) { //si on trouve un point d'intersection et qu'il est plus proche de la camera
 			closerPoint = point;
 		}
 	}
@@ -91,7 +91,7 @@ bool objectEnlighted(Scene scene, vec3 point) {
 		lightReceive += 1;
 		for (int j = 0; j < numberObject; j++) {
 			vec3 newpoint = objectList[i]->intersect(shadowRay, point);
-			if (!(newpoint.x == newpoint.y == newpoint.z == -1) && enlighted) {
+			if (!(newpoint.x == -1 && newpoint.y == -1 && newpoint.z == -1) && enlighted) {
 				enlighted = false;
 				lightReceive -= 1;
 			}
@@ -113,14 +113,14 @@ void fill_image(FIBITMAP *image)
 		exit(404);
 	}
 	//Draws a gradient from blue to green:
-	for (int i = 0; i < WIDTH; i++) {
+	/*for (int i = 0; i < WIDTH; i++) {
 		for (int j = 0; j < HEIGHT; j++) {
 			color.rgbRed = 0;
 			color.rgbGreen = (double)i / WIDTH * 255.0;
 			color.rgbBlue = (double)j / HEIGHT * 255.0;
 			FreeImage_SetPixelColor(image, i, j, &color);
 		}
-	}
+	}*/
 }
 void random_image(FIBITMAP *image)
 {
@@ -156,7 +156,8 @@ void generate_image(FIBITMAP *image, Scene sce, Camera c)
 		for (int j = 0; j < HEIGHT; j++) {
 			vec3 primaryRay = c.createRay(i, j);
 			vec3 visiblePoint = objectVisible(sce, primaryRay, c.position);
-			if (visiblePoint.x == visiblePoint.y == visiblePoint.z == 999) {
+			//printf("x : %f y : %f z : %f", visiblePoint.x, visiblePoint.y, visiblePoint.z);
+			if (visiblePoint.x == 999.0 && visiblePoint.y == 999.0 && visiblePoint.z == 999.0) {
 				color.rgbRed = 255;
 				color.rgbGreen = 0;
 				color.rgbBlue = 0;
@@ -262,9 +263,11 @@ void render_windows(Scene sce, Camera c)
 
 int main(int argc, char* argv[])
 {	
-	Sphere s = Sphere(5, 5, 5, 10);
-	Camera cam = Camera(vec3(0, 0, 5), vec3(1, 1, 0));
-	LightSource light = LightSource(255, 255, 255, vec3(10, 10, 10));
+	Sphere s = Sphere(10, 10, 10, 5);
+	Camera cam = Camera(vec3(0, 0, 10), vec3(1, 1, 0));
+	cam.sizex = WIDTH;
+	cam.sizey = HEIGHT;
+	LightSource light = LightSource(255, 255, 255, vec3(20, 20, 20));
 	Scene scene = Scene();
 	scene.add_camera(cam);
 	scene.add_lightsources(light);
