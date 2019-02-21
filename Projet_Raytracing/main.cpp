@@ -15,7 +15,7 @@
 #define BitsPerPixel 24
 /*Definition for processing*/
 #define DEBUG 1 //For printing debug cout
-#define DEBUG_IMAGE 0 //for printing debug_image (random color)
+#define DEBUG_IMAGE 1 //for printing debug_image (random color)
 #define PRINT_WINDOWS 1 //for printing to screen the image
 
 //FreeImage_Save(FIF_PNG, bitmap, "export.png", 0); //Export an image to a file
@@ -205,12 +205,12 @@ void render_windows()
 }
 
 vec3 objectVisible(Scene scene,vec3 camRay, vec3 camPos) {
-	vector<Object> objectList = scene.get_objects();
+	vector<Object*> objectList = scene.get_objects();
 	int numberObject = objectList.size();
 	vec3 point = vec3(-1, -1, -1);
 	vec3 closerPoint = vec3(999, 999, 999);
 	for (int i = 0; i < numberObject; i++) {
-		point = objectList[i].intersect(camRay, camPos);
+		point = objectList[i]->intersect(camRay, camPos);
 		if (!(point.x == point.y == point.z == -1) && norm(dif3(point, camPos)) < norm(dif3(closerPoint, camPos))) { //si on trouve un point d'intersection et qu'il est plus proche de la camera
 			closerPoint = point;
 		}
@@ -221,7 +221,7 @@ vec3 objectVisible(Scene scene,vec3 camRay, vec3 camPos) {
 bool objectEnlighted(Scene scene, vec3 point) {
 	vector<LightSource> lightList = scene.get_lightsources();
 	int numberLight = lightList.size();
-	vector<Object> objectList = scene.get_objects();
+	vector<Object*> objectList = scene.get_objects();
 	int numberObject = objectList.size();
 	bool enlighted = true;
 	int lightReceive = 0;
@@ -230,7 +230,7 @@ bool objectEnlighted(Scene scene, vec3 point) {
 		enlighted = true;
 		lightReceive += 1;
 		for (int j = 0; j < numberObject; j++) {
-			vec3 newpoint = objectList[i].intersect(shadowRay, point);
+			vec3 newpoint = objectList[i]->intersect(shadowRay, point);
 			if (!(newpoint.x == newpoint.y == newpoint.z == -1) && enlighted) {
 				enlighted = false;
 				lightReceive -= 1;
@@ -246,6 +246,7 @@ bool objectEnlighted(Scene scene, vec3 point) {
 int main(int argc, char* argv[])
 {	
 	srand(time(NULL));
+	Game game;
 	render_windows(); // Affiche une fenetre avec l'image generee (boucle attendant une pression sur une touche)
 	return 0;
 }

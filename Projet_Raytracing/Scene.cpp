@@ -14,12 +14,17 @@ Scene::~Scene(){
 
 /*General getters setters*/
 int Scene::get_scene_id() {
-	return id;
+	return id_scene;
+}
+void Scene::set_scene_id(int id) {
+	id_scene = id;
 }
 string Scene::get_scene_name() {
 	return scene_name;
 }
-
+void Scene::set_scene_name(string name) {
+	scene_name = name;
+}
 /*Getters of vectors*/
 #pragma region Get_Vectors_Data
 vector<Materials> Scene::get_materials(){

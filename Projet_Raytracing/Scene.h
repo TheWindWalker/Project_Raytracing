@@ -14,7 +14,7 @@ using namespace std;
 class Scene
 {
 private:
-	int id = 0;
+	int id_scene = 0;
 	string scene_name = "This scene has no name!";
 
 public:
@@ -35,7 +35,9 @@ public:
 	void add_camera(Camera camera);
 
 	int get_scene_id();
+	void set_scene_id(int id);
 	string get_scene_name();
+	void set_scene_name(string name);
 
 	vector<Materials> get_materials();
 	vector<Object*> get_objects();
