@@ -303,9 +303,10 @@ void render_windows(Scene sce, Camera c)
 int main(int argc, char* argv[])
 {	
 	vector<Object*> spherelist;
-	for(int testx=0; testx<10;testx++)
+	for(int testx=0; testx<5;testx++)
 	{
-		spherelist.push_back(new Sphere(0 + 2 * testx, 1, 2, 0.99f));
+		spherelist.push_back(new Sphere(0 + 4 * testx, 1, 7, 1+testx*0.3));
+		spherelist.push_back(new Sphere(0 + 4 * testx, 14, 8, 1 + testx * 0.3));
 	}
 	//source de lumière en 0
 	LightSource light = LightSource(255, 255, 255, vec3(0, 0, 0));

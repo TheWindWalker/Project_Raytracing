@@ -26,9 +26,9 @@ void Sphere::affiche() const
 /*Fonctions de la classe*/
 
 vec3 Sphere::intersect(vec3 ray, vec3 position) {
-	float i = 0.1;
+	float i = -30.0;
 	vec3 point = vec3(-1, -1, -1);
-	while (i < 30) {
+	while (i < 0) {
 		if (norm(dif3(add3(position, prod(ray, i)), pos)) <= r) {
 			point = add3(position, prod(ray, i));
 			break;
