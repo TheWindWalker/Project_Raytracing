@@ -23,6 +23,7 @@ public:
 	/*Affiche le type*/
 	virtual void affiche() const;
 	virtual vec3 intersect(vec3 ray, vec3 position);
+	virtual void print_value_xyz();
 };
 
 #endif

@@ -17,6 +17,12 @@ Object::Object(vec3 pos, vec3 rot, int material)
 	materials = material;
 }
 
+void Object::print_value_xyz()
+{
+	std::cout << "X: " << position.x << " Y: " << position.y << " Z: " << position.z;
+}
+
+
 
 void Object::affiche() const
 {
